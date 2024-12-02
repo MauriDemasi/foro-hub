@@ -24,4 +24,8 @@ public class Perfil {
 
     @Column(name = "nombre", nullable = false, unique = true)
     private String nombre;
+
+
 }
+
+

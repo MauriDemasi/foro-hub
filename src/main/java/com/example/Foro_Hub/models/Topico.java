@@ -17,7 +17,7 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @Setter
-@JsonIgnoreProperties({"curso", "autor" })
+@JsonIgnoreProperties({"curso", "usuario" })
 public class Topico {
 
     @Id
@@ -44,7 +44,7 @@ public class Topico {
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "autor_id", nullable = false)
-    private Usuario autor;
+    private Usuario usuario;
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
@@ -62,7 +62,7 @@ public class Topico {
         this.mensaje = mensaje;
         this.fechaCreacion = now;
         this.status = statusTopico;
-        this.autor = usuario;
+        this.usuario = usuario;
         this.curso = curso;
     }
 

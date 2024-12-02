@@ -5,9 +5,9 @@ import com.example.Foro_Hub.dto.topicos.DatosActualizacionTopico;
 import com.example.Foro_Hub.dto.topicos.DatosDeListadoDeTopicos;
 import com.example.Foro_Hub.dto.topicos.DatosCreacionTopico;
 import com.example.Foro_Hub.enums.StatusTopico;
+import com.example.Foro_Hub.models.Usuario;
 import com.example.Foro_Hub.models.Curso;
 import com.example.Foro_Hub.models.Topico;
-import com.example.Foro_Hub.models.Usuario;
 import com.example.Foro_Hub.repositories.CursoRepository;
 import com.example.Foro_Hub.repositories.TopicoRepository;
 import com.example.Foro_Hub.repositories.UsuarioRepository;
@@ -40,7 +40,7 @@ public class TopicoController {
     @Transactional
     public ResponseEntity<DatosDeListadoDeTopicos> crearTopico(@RequestBody DatosCreacionTopico datosCreacionTopico) {
 
-       Usuario  usuario = usuarioRepository.findById(datosCreacionTopico.autor_id()).orElseThrow(()
+       Usuario usuario = usuarioRepository.findById(datosCreacionTopico.autor_id()).orElseThrow(()
                -> new RuntimeException("Usuario no encontrado"));
 
         Curso curso = cursoRepository.findById(datosCreacionTopico.curso_id()).orElseThrow(()
@@ -88,7 +88,7 @@ public class TopicoController {
                topico.getMensaje(),
                topico.getFechaCreacion(),
                StatusTopico.valueOf(String.valueOf(topico.getStatus())),
-               topico.getAutor().getNombre(),
+               topico.getUsuario().getNombre(),
                topico.getCurso().getNombre()
        ));
     }
@@ -113,7 +113,7 @@ public class TopicoController {
                     topico.getMensaje(),
                     topico.getFechaCreacion(),
                     StatusTopico.valueOf(String.valueOf(topico.getStatus())),
-                    topico.getAutor().getNombre(),
+                    topico.getUsuario().getNombre(),
                     topico.getCurso().getNombre()
             ));
         } else {
