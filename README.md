@@ -85,6 +85,7 @@ mvn spring-boot:run
 - `POST /topicos`: Crear nuevo tópico
 - `GET /topicos/{id}`: Obtener tópico específico
 - `PUT /topicos/{id}`: Actualizar tópico
+- `DELETE /topicos/{id}`: Eliminar tópico
 
 ## 🤝 Contribuciones
 ¡Las contribuciones son bienvenidas! 
