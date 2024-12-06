@@ -28,6 +28,7 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.POST, "/login", "/register").permitAll() // Permitir acceso público a /login
                         .requestMatchers("v3/api-docs/**", "/swagger-ui.html", "/swagger-ui/**").permitAll()
+                        .requestMatchers("/usuarios" , "/usuarios/**").authenticated()
                         .anyRequest().authenticated() // Requerir autenticación para cualquier otra ruta
                 )
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class);
