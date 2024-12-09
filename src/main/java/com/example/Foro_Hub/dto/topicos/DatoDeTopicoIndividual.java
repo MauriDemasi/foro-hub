@@ -18,12 +18,8 @@ public record DatoDeTopicoIndividual(
 
 
     public DatoDeTopicoIndividual(@NotNull String titulo, @NotNull String mensaje, @NotNull
-    LocalDateTime fechaCreacion, String s, Long id, Long id1) {
-        this(titulo, mensaje, fechaCreacion, StatusTopico.valueOf(s), new Usuario(id), new Curso(id1));
-    }
+    LocalDateTime fechaCreacion, @NotNull StatusTopico status, @NotNull String nombre) {
 
-    public DatoDeTopicoIndividual(@NotNull String titulo, @NotNull String mensaje,
-                                  @NotNull LocalDateTime fechaCreacion, StatusTopico statusTopico, Usuario usuario, Curso curso) {
-        this(titulo, mensaje, fechaCreacion, StatusTopico.valueOf(statusTopico.name()), usuario.getNombre(), curso.getNombre());
+        this(titulo, mensaje, fechaCreacion, status, nombre, null);
     }
 }

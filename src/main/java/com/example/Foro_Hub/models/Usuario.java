@@ -44,6 +44,12 @@ public class Usuario implements UserDetails {
     @Column(name = "password")
     private String password;
 
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Topico> topicos;
+
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Respuesta> respuestas;
+
 
     @ManyToOne
     @JoinColumn(name = "perfil_id", nullable = false)

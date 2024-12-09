@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 
 
-@Table(name = "respuestas")
+@Table(name = "respuesta")
 @Entity (name = "Respuesta")
 @Getter
 @AllArgsConstructor
@@ -29,9 +29,6 @@ public class Respuesta {
     @Column(name = "mensaje", nullable = false, length = 800)
     private String mensaje;
 
-
-
-
     @NotNull
     @Column(name = "fecha_creacion", nullable = false)
     private LocalDateTime  fechaCreacion = LocalDateTime.now();
@@ -44,6 +41,12 @@ public class Respuesta {
     @JoinColumn(name = "topico_id")
     @JsonManagedReference
     private Topico topico;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "curso_id", nullable = false)
+    @JsonManagedReference
+    private Curso curso;
+
 
     @NotNull
     private Boolean solucion = false;

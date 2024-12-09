@@ -66,6 +66,10 @@ public class Topico {
         this.curso = curso;
     }
 
+    public Topico(@NotNull String titulo) {
+        this.titulo = titulo;
+    }
+
     public void setFechaEdicion(LocalDateTime now) {
         this.fechaCreacion = now;
     }
