@@ -1,6 +1,7 @@
 package com.example.Foro_Hub.repositories;
 
 import com.example.Foro_Hub.models.Usuario;
+
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -14,8 +15,10 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long>{
 
     List<Usuario> findAll();
 
-    Usuario findByNombre(String nombre);
+    Usuario findByNombreAndActivoTrue(String nombre);
 
     boolean existsByEmail(@NotNull @Email String email);
+
+    Usuario findByEmailAndActivoTrue(String nombre);
 
 }

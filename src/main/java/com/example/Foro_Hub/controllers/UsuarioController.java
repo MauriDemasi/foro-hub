@@ -3,14 +3,16 @@ package com.example.Foro_Hub.controllers;
 
 import com.example.Foro_Hub.dto.topicos.DatoDeTopicoIndividual;
 import com.example.Foro_Hub.dto.usuario.DatosDePerfilCompleto;
+import com.example.Foro_Hub.dto.usuario.DatosParaActualizar;
 import com.example.Foro_Hub.models.Usuario;
 import com.example.Foro_Hub.repositories.TopicoRepository;
 import com.example.Foro_Hub.services.UsuarioService;
+
+import jakarta.validation.Valid;
+
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.example.Foro_Hub.dto.usuario.DatosDeUsuarioRegistrado;
 import com.example.Foro_Hub.repositories.UsuarioRepository;
@@ -34,6 +36,8 @@ public class UsuarioController {
 
     @Autowired
     private UsuarioService usuarioService;
+
+
 
    @GetMapping
    public ResponseEntity<List<DatosDeUsuarioRegistrado>> obtenerUsuarios(@AuthenticationPrincipal UserDetails userDetails) {
@@ -66,13 +70,49 @@ public class UsuarioController {
       }
 
       var usuario = usuarioRepository.findByEmail(userDetails.getUsername());
+
       if (usuario == null) {
          return ResponseEntity.notFound().build();
       }
 
       DatosDePerfilCompleto perfilCompleto = usuarioService.obtenerPerfilCompleto((Usuario) usuario);
       return ResponseEntity.ok(List.of(perfilCompleto));
+   }
+
+
+   //Put para actualizar la info de un perfil
+   @PutMapping
+   public ResponseEntity<DatosParaActualizar> actualizarUsuario(@Valid @RequestBody DatosParaActualizar  datosParaActualizar,
+                                                                @AuthenticationPrincipal UserDetails userDetails) {
+
+      if (userDetails == null) {
+         return ResponseEntity.status(401).build();
+      }
+
+      var usuarioActualizado = usuarioService.actualizarUsuario(
+             datosParaActualizar, userDetails.getUsername());
+
+      return ResponseEntity.ok(usuarioActualizado);
 
    }
 
+   //Delete para que un usuario pueda dar de baja su perfil
+
+   @DeleteMapping
+   public ResponseEntity<String> darDeBajaUsuario(@AuthenticationPrincipal UserDetails userDetails) {
+
+      if (userDetails == null) {
+         return ResponseEntity.status(401).body("Usuario no autenticado");
+      }
+
+
+      try {
+         usuarioService.darDeBajaUsuario(userDetails.getUsername());
+         return ResponseEntity.ok("Perfil desactivado con éxito.");
+      } catch (RuntimeException e) {
+         return ResponseEntity.status(404).body(e.getMessage());
+      }
+   }
+
+   
 }

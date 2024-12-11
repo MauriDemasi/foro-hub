@@ -1,14 +1,12 @@
 package com.example.Foro_Hub.models;
 
+import com.example.Foro_Hub.dto.usuario.DatosParaActualizar;
 import com.example.Foro_Hub.dto.usuario.DatosRegistroUsuario;
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -20,6 +18,7 @@ import java.util.List;
 @Table(name = "usuario")
 @Entity (name = "Usuario")
 @Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode
@@ -43,6 +42,10 @@ public class Usuario implements UserDetails {
     @NotNull
     @Column(name = "password")
     private String password;
+
+    @Column(name = "activo", nullable = false)
+    private Boolean activo = true;
+
 
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Topico> topicos;
@@ -108,4 +111,6 @@ public class Usuario implements UserDetails {
     public void setPassword(String encode) {
         this.password = encode;
     }
+
+
 }
